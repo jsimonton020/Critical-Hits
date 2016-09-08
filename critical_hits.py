@@ -3,6 +3,7 @@ import random
 import sys
 
 CRIT = 6
+hp = 10
 
 def dice_roll():
     dice_numbers = []
@@ -13,23 +14,24 @@ def dice_roll():
         dice_numbers.append(dice)
     return dice_numbers
 
+print("\nWelcome to Critical Hits!\n")
+
 while True:
-    print("Welcome to Critical Hits!")
+    print("\nTarget hit points:", + hp)
     print("1: Roll")
     print("2: Quit")
     choice = input("Make a selection: ")
 
     if choice == "1":
-        print(dice_roll())
+        d6 = dice_roll()
+        print(d6)
+        print("You hit for", sum(d6))
+        hp = hp - sum(d6)
+        if hp <= 0:
+                print("Enemy Down!")
+                break
     elif choice == "2":
         print("Closing Critical Hits")
         sys.exit()
     else:
         print("\nPlease choose from the list\n")
-
-
-#dice_roll()
-#print(dice_numbers)
-
-#hit = (sum(dice_numbers))
-#print("You hit for", + hit)

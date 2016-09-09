@@ -1,37 +1,32 @@
 #!/usr/bin/python3
+
 import random
-import sys
 
 CRIT = 6
-hp = 10
+hp = random.randint(10, 50)
 
-def dice_roll():
-    dice_numbers = []
-    dice = random.randint(1,6)
-    dice_numbers.append(dice)
-    while dice == CRIT:
+class Character:
+    def __init__(self):
+        self.name = ""
+        self.health = ""
+        self.health_max = ""
+    def dice_roll():
+        dice_numbers = []
         dice = random.randint(1,6)
         dice_numbers.append(dice)
-    return dice_numbers
+        while dice == CRIT:
+            dice = random.randint(1,6)
+            dice_numbers.append(dice)
+        return dice_numbers
 
-print("\nWelcome to Critical Hits!\n")
+class Enemy(Character):
+    def __init__(self, player):
+        Character.__init__(self)
+        self.name = ""
+        self.health = random.randint(1, player.health)
 
-while True:
-    print("\nTarget hit points:", + hp)
-    print("1: Roll")
-    print("2: Quit")
-    choice = input("Make a selection: ")
-
-    if choice == "1":
-        d6 = dice_roll()
-        print(d6)
-        print("You hit for", sum(d6))
-        hp = hp - sum(d6)
-        if hp <= 0:
-                print("Enemy Down!")
-                break
-    elif choice == "2":
-        print("Closing Critical Hits")
-        sys.exit()
-    else:
-        print("\nPlease choose from the list\n")
+class Player(Character):
+    def __init__(self):
+        self.state = ""
+        self.health = ""
+        self.health_max = ""

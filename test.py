@@ -1,13 +1,35 @@
 #!/usr/bin/python3
-from classes import Character, Dice, d_bag, set_enemies
-import random
+from classes import Character, d_bag, set_enemies
 import os
 import sys
 
-play_dice = d_bag(6,1)
+play_dice = d_bag(6, 1)
 player = Character("Player", 50, play_dice, 0)
 enemy_list = set_enemies()
 enemy = enemy_list.pop()
+
+
+def get_points():
+    count = len(enemy_list)
+    if count == 9:
+        player.points += 1
+    elif count == 8:
+        player.points += 2
+    elif count == 7:
+        player.points += 3
+    elif count == 6:
+        player.points += 4
+    elif count == 5:
+        player.points += 5
+    elif count == 4:
+        player.points += 6
+    elif count == 3:
+        player.points += 7
+    elif count == 2:
+        player.points += 8
+    elif count == 1:
+        player.points += 9
+
 
 os.system('clear')
 print("\nWelcome to Critical Hits!\n")
@@ -57,54 +79,18 @@ while True:
         if player.hp <= 0 and enemy.hp > 0:
             print("\nYou died!\n")
             print(enemy.name, "hit points:", enemy.hp)
-            count = len(enemy_list)
-            print(count, "enemies left.")
-            if count == 9:
-                player.points += 1
-            elif count == 8:
-                player.points += 2
-            elif count == 7:
-                player.points += 3
-            elif count == 6:
-                player.points += 4
-            elif count == 5:
-                player.points += 5
-            elif count == 4:
-                player.points += 6
-            elif count == 3:
-                player.points += 7
-            elif count == 2:
-                player.points += 8
-            elif count == 1:
-                player.points += 9
-            print(player.points, "points gained")
+            print(len(enemy_list), "enemies left.")
+            get_points()
+            print(player.points, "points gained.")
             break
 
         if player.hp and enemy.hp <= 0:
             print("\nDraw!\n")
             print(player.name, "hit points: 0")
             print(enemy.name, "hit points: 0")
-            count = len(enemy_list)
-            print(count, "enemies left.")
-            if count == 9:
-                player.points += 1
-            elif count == 8:
-                player.points += 2
-            elif count == 7:
-                player.points += 3
-            elif count == 6:
-                player.points += 4
-            elif count == 5:
-                player.points += 5
-            elif count == 4:
-                player.points += 6
-            elif count == 3:
-                player.points += 7
-            elif count == 2:
-                player.points += 8
-            elif count == 1:
-                player.points += 9
-            print(player.points, "points gained")
+            print(len(enemy_list), "enemies left.")
+            get_points()
+            print(player.points, "points gained.")
             break
 
     elif choice == "2":

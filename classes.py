@@ -45,6 +45,12 @@ def d_bag(sides, amount):
     return bag
 
 
+def set_player():
+    play_dice = d_bag(6, 1)
+    player = Character("Player", 50, play_dice, 0)
+    return player
+
+
 def set_enemies():
     slime_dice = d_bag(6, 1)
     slime = Character("Slime", 20, slime_dice)
@@ -76,27 +82,37 @@ def set_enemies():
     drag_dice = d_bag(20, 2)
     dragon = Character("Dragon", 155, drag_dice)
 
-    e = [dragon, giant, chimera, owlbear,
-         troll, orc, hobgob, goblin, bat, slime]
-    return e
+    enemy_list = [dragon, giant, chimera, owlbear,
+                  troll, orc, hobgob, goblin, bat, slime]
+    return enemy_list
 
 
 def spend_points(player):
     points = player.points
     print("Player points:", points)
-    print("1. More hp")
-    print("2. Upgrade dice")
-    print("3. Add dice")
+    print("1. More HP")
+    print("2. Upgrade Die")
+    print("3. Add 1 D6")
     choice = input("What would you like to spend your points on?: ")
+
     if choice == "1":
         print("Player max hp:", player.max_hp)
         player.max_hp += 20
         print("Player max hp upgraded to:", player.max_hp)
+        player.points -= 1
+
     elif choice == "2":
         for i, d in enumerate(player.dice, start=1):
-            print("{}:{}".format(i, d))
+            print("{} : {}".format(i, d))
         d_choice = input("Die to upgrade?")
         d_choice -= 1
+#        code goes here to upgrade die
+        player.points -= 1
+
+    elif choice == "3":
+        p_dice = d_bag(6, 1)
+        player.dice += p_dice
+        player.points -= 1
 
     else:
         print("Please select from the list")

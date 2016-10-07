@@ -1,54 +1,23 @@
 #!/usr/bin/python3
-from classes import Character, d_bag, set_enemies, game_restart, spend_points
+from classes import set_enemies, set_player, game_restart, spend_points
 import os
 import sys
 
-play_dice = d_bag(6, 3)
-player = Character("Player", 50, play_dice, 0)
+player = set_player()
 enemy_list = set_enemies()
 enemy = enemy_list.pop()
 
 
 def get_points():
     count = len(enemy_list)
-    if count == 9:
-        player.points += 0
-        return 0
-    elif count == 8:
-        player.points += 1
-        return 1
-    elif count == 7:
-        player.points += 2
-        return 2
-    elif count == 6:
-        player.points += 3
-        return 3
-    elif count == 5:
-        player.points += 4
-        return 4
-    elif count == 4:
-        player.points += 5
-        return 5
-    elif count == 3:
-        player.points += 6
-        return 6
-    elif count == 2:
-        player.points += 7
-        return 7
-    elif count == 1:
-        player.points += 8
-        return 8
-    elif count == 0:
-        player.points += 9
-        return 9
-
+    points = range(9, -1, -1)
+    return points[count]
 
 os.system('clear')
 print("\nWelcome to Critical Hits!\n")
 print("You have", player.points, "points.")
 
 while True:
-    print("\n")
     print(enemy.name, "hit points:", enemy.hp)
     print(player.name, "hit points:", player.hp)
     print("1: Roll")
@@ -92,7 +61,9 @@ while True:
             print("\nYou died!\n")
             print(enemy.name, "hit points:", enemy.hp)
             print(len(enemy_list), "enemies left.")
-            print(get_points(), "points gained.")
+            pts = get_points()
+            player.points += pts
+            print(pts, "points gained.")
             spend_points(player)
             enemy_list = game_restart(player)
             enemy = enemy_list.pop()
@@ -102,7 +73,9 @@ while True:
             print(player.name, "hit points: 0")
             print(enemy.name, "hit points: 0")
             print(len(enemy_list), "enemies left.")
-            print(get_points(), "points gained.")
+            pts = get_points()
+            player.points += pts + 1
+            print(pts, "points gained.")
             spend_points(player)
             enemy_list = game_restart(player)
             enemy = enemy_list.pop()

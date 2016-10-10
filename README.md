@@ -1,4 +1,9 @@
 # Critical-Hits
+***This started off as a simple exercise to simulate dice rolls.
+I've been adding to it overtime as a learning experience.***
+
+
+
 This is a text based dice game with some rogue-lite elements.
 
 If you roll the maximum value on a die, you get to roll the die again and add

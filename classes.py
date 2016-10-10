@@ -99,43 +99,48 @@ def set_enemies():
 
 
 def spend_points(player):
+    while True:
+        points = check_points(player)
+        print("Player points:", points)
+        print("1. More HP: 1 point")
+        print("2. Upgrade Die: 2 points")
+        print("3. Add 1 D4: 3 points")
+        print("4. All Finished")
+        choice = input("What would you like to spend your points on?: ")
+        try:
+            if choice == "1" and points >= 1:
+                print("Player max hp:", player.max_hp)
+                player.max_hp += 20
+                print("Player max hp upgraded to:", player.max_hp)
+                player.points -= 1
+                spend_points(player)
 
-    points = check_points(player)
-    print("Player points:", points)
-    print("1. More HP: 1 point")
-    print("2. Upgrade Die: 2 points")
-    print("3. Add 1 D4: 3 points")
-    print("4. All Finished")
-    choice = input("What would you like to spend your points on?: ")
+            elif choice == "2" and points >= 2:
+                for i, d in enumerate(player.dice, start=1):
+                    print("{} : {}".format(i, d))
+                d_choice = int(input("Die to upgrade?: "))
+                d_choice -= 1
+                player.upgrade_dice(d_choice)
+                player.points -= 2
+                spend_points(player)
 
-    if choice == "1" and points >= 1:
-        print("Player max hp:", player.max_hp)
-        player.max_hp += 20
-        print("Player max hp upgraded to:", player.max_hp)
-        player.points -= 1
-        spend_points(player)
+            elif choice == "3" and points >= 3:
+                p_dice = d_bag(1, 1)
+                player.dice += p_dice
+                player.points -= 3
+                spend_points(player)
 
-    elif choice == "2" and points >= 2:
-        for i, d in enumerate(player.dice, start=1):
-            print("{} : {}".format(i, d))
-        d_choice = int(input("Die to upgrade?: "))
-        d_choice -= 1
-        player.upgrade_dice(d_choice)
-        player.points -= 2
-        spend_points(player)
+            elif choice == "4":
+                game_restart(player)
 
-    elif choice == "3" and points >= 3:
-        p_dice = d_bag(1, 1)
-        player.dice += p_dice
-        player.points -= 3
-        spend_points(player)
-
-    elif choice == "4":
-        game_restart(player)
-
-    else:
-        print("Please select from the list")
-        spend_points(player)
+            else:
+                print("Please select from the list")
+                spend_points(player)
+        except (ValueError, IndexError):
+            print("Invalid Selection")
+            continue
+        else:
+            break
 
 
 def shai_surprise():

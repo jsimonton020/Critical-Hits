@@ -1,6 +1,6 @@
 # Critical-Hits
 ***This started off as a simple exercise to simulate dice rolls.
-I've been adding to it overtime as a learning experience.***
+I've been adding to it over time as a learning experience.***
 
 
 

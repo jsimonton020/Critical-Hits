@@ -105,6 +105,7 @@ def spend_points(player):
     print("1. More HP: 1 point")
     print("2. Upgrade Die: 2 points")
     print("3. Add 1 D4: 3 points")
+    print("4. All Finished")
     choice = input("What would you like to spend your points on?: ")
 
     if choice == "1" and points >= 1:
@@ -112,6 +113,7 @@ def spend_points(player):
         player.max_hp += 20
         print("Player max hp upgraded to:", player.max_hp)
         player.points -= 1
+        spend_points(player)
 
     elif choice == "2" and points >= 2:
         for i, d in enumerate(player.dice, start=1):
@@ -120,11 +122,16 @@ def spend_points(player):
         d_choice -= 1
         player.upgrade_dice(d_choice)
         player.points -= 2
+        spend_points(player)
 
     elif choice == "3" and points >= 3:
         p_dice = d_bag(1, 1)
         player.dice += p_dice
         player.points -= 3
+        spend_points(player)
+
+    elif choice == "4":
+        game_restart(player)
 
     else:
         print("Please select from the list")

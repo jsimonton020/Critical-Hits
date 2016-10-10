@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from classes import set_enemies, set_player, game_restart, spend_points
+from classes import set_enemies, set_player, game_restart, spend_points, shai_surprise
 import os
 import sys
 
@@ -52,7 +52,10 @@ while True:
             print(player.name, "hit points:", player.hp)
             if len(enemy_list) == 0:
                 print("You have defeated all the enemies!")
-                break
+                enemy = shai_surprise()
+                print("Normal Tuesday night for", enemy.name)
+                if enemy.hp <= 0:
+                    print("You have defeated", enemy.name + "!")
             else:
                 enemy = enemy_list.pop()
                 print("\nA new enemy approaches!")

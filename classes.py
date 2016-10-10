@@ -47,7 +47,6 @@ class Dice:
         return 'd{}'.format(self.sides)
 
 
-# Make a list of dice objects
 def d_bag(rank, amount):
     bag = []
     for i in range(0, amount):
@@ -130,6 +129,16 @@ def spend_points(player):
     else:
         print("Please select from the list")
         spend_points(player)
+
+
+def shai_surprise():
+    print("You start to celebrate the hard fought victory... ")
+    print("You look over your shoulder and see him...")
+    print("He gets down on all fours and bursts into a sprint...")
+    print("IT'S SHIA LEBOUF!!!!!")
+    shia_dice = d_bag(6, 4)
+    shia = Character("Shia LaBeouf", 250, shia_dice)
+    return shia
 
 
 def game_restart(player):

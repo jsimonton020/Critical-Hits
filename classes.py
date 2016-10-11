@@ -143,7 +143,7 @@ def spend_points(player):
             break
 
 
-def shai_surprise():
+def shia_surprise():
     print("You start to celebrate the hard fought victory... ")
     print("You look over your shoulder and see him...")
     print("He gets down on all fours and bursts into a sprint...")

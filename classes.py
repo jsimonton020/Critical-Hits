@@ -83,7 +83,7 @@ def check_down(player, enemy, enemy_list):
                 print("You have defeated", enemy.name + "!")
         else:
             os.system('clear')
-            new_enemy(enemy, enemy_list)
+            enemy = enemy_list.pop()
 
 
 def check_died(player, enemy, enemy_list):
@@ -97,7 +97,7 @@ def check_died(player, enemy, enemy_list):
         pause()
         spend_points(player)
         enemy_list = game_restart(player)
-        new_enemy(enemy, enemy_list)
+        enemy = enemy_list.pop()
 
 
 def check_draw(player, enemy, enemy_list):
@@ -113,7 +113,7 @@ def check_draw(player, enemy, enemy_list):
         pause()
         spend_points(player)
         enemy_list = game_restart(player)
-        new_enemy(enemy, enemy_list)
+        enemy = enemy_list.pop()
 
 
 def d_bag(rank, amount):
@@ -122,12 +122,6 @@ def d_bag(rank, amount):
         d = Dice(rank)
         bag.append(d)
     return bag
-
-
-def new_enemy(enemy, enemy_list):
-    print("A new enemy approaches!")
-    enemy = enemy_list.pop()
-    return enemy
 
 
 def set_player():

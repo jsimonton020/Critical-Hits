@@ -5,12 +5,13 @@ import sys
 CRIT = 6
 hp = 50
 
+
 def dice_roll():
     dice_numbers = []
-    dice = random.randint(1,6)
+    dice = random.randint(1, 6)
     dice_numbers.append(dice)
     while dice == CRIT:
-        dice = random.randint(1,6)
+        dice = random.randint(1, 6)
         dice_numbers.append(dice)
     return dice_numbers
 

@@ -6,16 +6,18 @@ import os
 CRIT = 6
 gen_hp = random.randint(50, 100)
 
+
 class Character:
-    def __init__(self,name, hp):
+    def __init__(self, name, hp):
         self.name = name
         self.hp = hp
+
     def dice_roll(self):
         dice_numbers = []
-        dice = random.randint(1,6)
+        dice = random.randint(1, 6)
         dice_numbers.append(dice)
         while dice == CRIT:
-            dice = random.randint(1,6)
+            dice = random.randint(1, 6)
             dice_numbers.append(dice)
         return dice_numbers
 
@@ -45,6 +47,7 @@ while True:
         if sum(p_roll) >= 18:
             print("M-M-M-M-M-MONSTER HIT!")
         enemy.hp = enemy.hp - sum(p_roll)
+
         e_roll = enemy.dice_roll()
         print("\n")
         print(e_roll)
@@ -56,14 +59,17 @@ while True:
         if sum(e_roll) >= 18:
             print("M-M-M-M-M-MONSTER HIT!")
         player.hp = player.hp - sum(e_roll)
+
         if enemy.hp <= 0 and player.hp > 0:
             print(enemy.name, "Down!\n")
             print(player.name, "hit points:", player.hp)
             break
+
         if player.hp <= 0 and enemy.hp > 0:
             print("\nYou died!\n")
             print(enemy.name, "hit points:", enemy.hp)
             break
+
         if player.hp and enemy.hp <= 0:
             print("\nDraw!\n")
             print(player.name, "hit points: 0")
@@ -76,6 +82,7 @@ while True:
     else:
         os.system('clear')
         print("\nPlease choose from the list\n")
+
 
 def restart_p():
     restart = input("Would you like to play again? >")

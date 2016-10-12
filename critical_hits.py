@@ -23,9 +23,9 @@ while True:
     if choice == "1":
         os.system('clear')
         character_roll(player, enemy)
-        check_down(player, enemy, enemy_list)
-        check_died(player, enemy, enemy_list)
-        check_draw(player, enemy, enemy_list)
+#        check_down(player, enemy, enemy_list)
+#        check_died(player, enemy, enemy_list)
+#        check_draw(player, enemy, enemy_list)
 
     elif choice == "2":
         print("Closing Critical Hits")

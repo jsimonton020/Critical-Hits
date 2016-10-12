@@ -13,11 +13,13 @@ class Character:
 
     def roll(self):
         damage = 0
+        count = 0
         for d in self.dice:
-            roll = d.dice_roll()
+            roll, _count = d.dice_roll()
             print(roll)
+            count += _count
             damage += sum(roll)
-        return damage
+        return damage, count
 
     def upgrade_dice(self, d_choice):
         self.dice[d_choice].upgrade()
@@ -31,14 +33,15 @@ class Dice:
         self.rank = rank
         self.sides = Dice.RANKS[rank]
 
-    def dice_roll(self):
+    def dice_roll(self, count=1):
         dice_numbers = []
         dice = random.randint(1, self.sides)
         dice_numbers.append(dice)
         while dice == self.sides:
             dice = random.randint(1, self.sides)
             dice_numbers.append(dice)
-        return dice_numbers
+            count += 1
+        return dice_numbers, count
 
     def upgrade(self):
         self.rank += 1
@@ -49,24 +52,28 @@ class Dice:
 
 
 def character_roll(player, enemy):
-    p_roll = player.roll()
+    p_roll, count = player.roll()
     print(player.name, "hit for", p_roll)
-    if p_roll >= 4 and p_roll < 8:
-        print("CRITICAL HIT!")
-    if p_roll >= 8 and p_roll < 12:
-        print("MEGA HIT!")
-    if p_roll >= 12:
+    if count >= 5:
+        print("OMG OMG OMG OMG OMG!!!")
+    elif count == 4:
         print("M-M-M-M-M-MONSTER HIT!")
+    elif count == 3:
+        print("MEGA HIT!")
+    elif count == 2:
+        print("CRITICAL HIT!")
     enemy.hp -= p_roll
 
-    e_roll = enemy.roll()
+    e_roll, count = enemy.roll()
     print(enemy.name, "hit for", e_roll)
-    if e_roll >= 4 and e_roll < 8:
-        print("CRITICAL HIT!")
-    if e_roll >= 8 and e_roll < 12:
-        print("MEGA HIT!")
-    if e_roll >= 12:
+    if count >= 5:
+        print("OMG OMG OMG OMG OMG!!!")
+    elif count == 4:
         print("M-M-M-M-M-MONSTER HIT!")
+    elif count == 3:
+        print("MEGA HIT!")
+    elif count == 2:
+        print("CRITICAL HIT!")
     player.hp -= e_roll
 
 
@@ -78,7 +85,7 @@ def check_down(player, enemy, enemy_list):
         if len(enemy_list) == 0:
             print("You have defeated all the enemies!")
             pause()
-#            enemy = shia_surprise()
+            enemy = shia_surprise()
             if enemy.hp <= 0:
                 print("You have defeated", enemy.name + "!")
         else:

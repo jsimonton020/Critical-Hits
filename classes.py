@@ -72,55 +72,49 @@ def character_roll(player, enemy):
         print("M-M-M-M-M-MONSTER HIT!")
     elif count == 3:
         print("MEGA HIT!")
-    elif count == 2:
-        print("CRITICAL HIT!")
     player.hp -= e_roll
 
 
-def check_down(player, enemy, enemy_list):
-    if enemy.hp <= 0 and player.hp > 0:
-        print(enemy.name, "Down!\n")
+def down(player, enemy, enemy_list):
+        print("You have defeated", enemy.name + "!")
         print(player.name, "hit points:", player.hp)
         pause()
-        if len(enemy_list) == 0:
+        count = check_enemy(enemy_list)
+        if count == 0:
             print("You have defeated all the enemies!")
-            pause()
-            enemy = shia_surprise()
-            if enemy.hp <= 0:
-                print("You have defeated", enemy.name + "!")
-        else:
+            # enemy = shia_surprise()
+        elif count > 0:
             os.system('clear')
+            print("A new enemy approaches")
             enemy = enemy_list.pop()
+            return enemy
 
 
-def check_died(player, enemy, enemy_list):
-    if player.hp <= 0 and enemy.hp > 0:
+def died(player, enemy, enemy_list):
         print("\nYou died!\n")
         print(enemy.name, "hit points:", enemy.hp)
-        print(len(enemy_list), "enemies left.")
-        pts = get_points()
+        print(len(enemy_list) + 1, "enemies left.")
+        pts = get_points(enemy_list)
         player.points += pts
-        print(pts, "points gained.")
+        print(pts, "point(s) gained.")
         pause()
         spend_points(player)
         enemy_list = game_restart(player)
-        enemy = enemy_list.pop()
+        return enemy_list
 
 
-def check_draw(player, enemy, enemy_list):
-    if player.hp and enemy.hp <= 0:
+def draw(player, enemy, enemy_list):
         print("\nDraw!\n")
         print(player.name, "hit points: 0")
         print(enemy.name, "hit points: 0")
         print(len(enemy_list), "enemies left.")
-        enemy = enemy_list.pop()
         pts = get_points(enemy_list)
-        player.points += pts
-        print(pts, "points gained.")
+        player.points += pts + 1
+        print(pts + 1, "point(s) gained.")
         pause()
         spend_points(player)
         enemy_list = game_restart(player)
-        enemy = enemy_list.pop()
+        return enemy_list
 
 
 def d_bag(rank, amount):
@@ -175,7 +169,7 @@ def set_enemies():
 
 
 def spend_points(player):
-    while True:
+    while player.points > 0:
         os.system('clear')
         points = check_points(player)
         print("Player points:", points)
@@ -193,6 +187,11 @@ def spend_points(player):
                 pause()
                 spend_points(player)
 
+            elif choice == "1" and points < 1:
+                print("Not enough points")
+                pause()
+                spend_points(player)
+
             elif choice == "2" and points >= 2:
                 for i, d in enumerate(player.dice, start=1):
                     print("{} : {}".format(i, d))
@@ -206,10 +205,22 @@ def spend_points(player):
                     pause()
                 spend_points(player)
 
+            elif choice == "2" and points < 2:
+                print("Not enough points")
+                pause()
+                spend_points(player)
+
             elif choice == "3" and points >= 3:
                 p_dice = d_bag(1, 1)
                 player.dice += p_dice
                 player.points -= 3
+                print("Added 1 d4 to your dice bag")
+                pause()
+                spend_points(player)
+
+            elif choice == "3" and points < 3:
+                print("Not enough points")
+                pause()
                 spend_points(player)
 
             elif choice == "4":
@@ -217,12 +228,11 @@ def spend_points(player):
 
             else:
                 print("Please select from the list")
+                pause()
                 spend_points(player)
         except (ValueError, IndexError):
             print("Invalid Selection")
             continue
-        else:
-            break
 
 
 def shia_surprise():
@@ -233,15 +243,17 @@ def shia_surprise():
     pause()
     print("He gets down on all fours and bursts into a sprint...")
     pause()
+    os.system('clear')
     print("IT'S SHIA LEBOUF!!!!!")
     shia_dice = d_bag(6, 4)
-    shia = Character("Shia LaBeouf", 250, shia_dice)
+    shia = Character("Shia LaBeouf", 1, shia_dice)
     return shia
 
 
 def game_restart(player):
     player.hp = player.max_hp
-    return set_enemies()
+    enemy_list = set_enemies()
+    return enemy_list
 
 
 def get_points(enemy_list):
@@ -253,6 +265,11 @@ def get_points(enemy_list):
 def check_points(player):
     points = player.points
     return points
+
+
+def check_enemy(enemy_list):
+    count = len(enemy_list)
+    return count
 
 
 def pause():

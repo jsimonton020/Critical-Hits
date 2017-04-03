@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-from classes import (set_enemies, set_player, character_roll, check_down,
-                     check_died, check_draw)
+from classes import (set_enemies, set_player, character_roll, down,
+                     died, draw)
 import os
 import sys
 
@@ -13,7 +13,7 @@ os.system('clear')
 print("\nWelcome to Critical Hits!\n")
 print("You have", player.points, "points.")
 
-while True:
+while len(enemy_list) > 0:
     print(enemy.name, "hit points:", enemy.hp)
     print(player.name, "hit points:", player.hp)
     print("1: Roll")
@@ -23,9 +23,14 @@ while True:
     if choice == "1":
         os.system('clear')
         character_roll(player, enemy)
-#        check_down(player, enemy, enemy_list)
-#        check_died(player, enemy, enemy_list)
-#        check_draw(player, enemy, enemy_list)
+        if enemy.hp <= 0 and player.hp > 0:
+            enemy = down(player, enemy, enemy_list)
+        if player.hp <= 0 and enemy.hp > 0:
+            enemy_list = died(player, enemy, enemy_list)
+            enemy = enemy_list.pop()
+        if player.hp <= 0 and enemy.hp <= 0:
+            enemy_list = draw(player, enemy, enemy_list)
+            enemy = enemy_list.pop()
 
     elif choice == "2":
         print("Closing Critical Hits")

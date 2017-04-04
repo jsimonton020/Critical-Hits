@@ -1,5 +1,6 @@
 import random
 import os
+import sys
 
 
 class Character:
@@ -80,9 +81,16 @@ def down(player, enemy, enemy_list):
         print(player.name, "hit points:", player.hp)
         pause()
         count = check_enemy(enemy_list)
-        if count == 0:
+        if count == 0 and enemy.name == "Shia LaBeouf":
+            fanfare()
+            sys.exit()
+
+        elif count == 0:
             print("You have defeated all the enemies!")
-            # enemy = shia_surprise()
+            pause()
+            enemy = shia_surprise()
+            return enemy
+
         elif count > 0:
             os.system('clear')
             print("A new enemy approaches")
@@ -245,9 +253,9 @@ def shia_surprise():
     pause()
     os.system('clear')
     print("IT'S SHIA LEBOUF!!!!!")
-    shia_dice = d_bag(6, 4)
-    shia = Character("Shia LaBeouf", 1, shia_dice)
-    return shia
+    shia_dice = d_bag(6, 3)
+    enemy = Character("Shia LaBeouf", 200, shia_dice)
+    return enemy
 
 
 def game_restart(player):
@@ -274,3 +282,7 @@ def check_enemy(enemy_list):
 
 def pause():
     input("Press ENTER to continue...")
+
+
+def fanfare():
+    print("Winner")

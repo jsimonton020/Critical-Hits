@@ -13,7 +13,7 @@ os.system('clear')
 print("\nWelcome to Critical Hits!\n")
 print("You have", player.points, "points.")
 
-while len(enemy_list) > 0:
+while True:
     print(enemy.name, "hit points:", enemy.hp)
     print(player.name, "hit points:", player.hp)
     print("1: Roll")

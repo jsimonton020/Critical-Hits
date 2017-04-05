@@ -293,7 +293,7 @@ def fanfare():
 
 
 def save_game(player, enemy, enemy_list):
-    path = '/home/jon/critical_hits/save_game.txt'
+    path = '/home/jon/critical_hits/save_game.json'
     os.system('clear')
     print("1: Yes")
     print("2: No")
@@ -301,7 +301,7 @@ def save_game(player, enemy, enemy_list):
     if choice == "1":
         print("do stuff")
         data = player, enemy, enemy_list
-        # how do I save json to save_game.txt
+        # how do I save to save_game.json
         json.dumps(data)
         sys.exit()
     elif choice == "2":

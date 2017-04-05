@@ -1,6 +1,7 @@
 import random
 import os
 import sys
+import json
 
 
 class Character:
@@ -73,6 +74,8 @@ def character_roll(player, enemy):
         print("M-M-M-M-M-MONSTER HIT!")
     elif count == 3:
         print("MEGA HIT!")
+    elif count == 2:
+        print("CRITICAL HIT!")
     player.hp -= e_roll
 
 
@@ -86,8 +89,6 @@ def down(player, enemy, enemy_list):
             sys.exit()
 
         elif count == 0:
-            print("You have defeated all the enemies!")
-            pause()
             enemy = shia_surprise()
             return enemy
 
@@ -134,42 +135,43 @@ def d_bag(rank, amount):
 
 
 def set_player():
+    os.system('clear')
     choice = input("What is your name?: ")
-    play_dice = d_bag(1, 1)
-    player = Character(choice, 50, play_dice)
+    play_dice = d_bag(1, 4)
+    player = Character(choice, 50, play_dice, 50)
     return player
 
 
 def set_enemies():
     slime_dice = d_bag(1, 1)
-    slime = Character("Slime", 20, slime_dice)
+    slime = Character("Slime", 15, slime_dice)
 
-    bat_dice = d_bag(1, 2)
-    bat = Character("Bat", 35, bat_dice)
+    bat_dice = d_bag(1, 1)
+    bat = Character("Bat", 30, bat_dice)
 
     gob_dice = d_bag(2, 1)
-    goblin = Character("Goblin", 50, gob_dice)
+    goblin = Character("Goblin", 45, gob_dice)
 
-    hob_dice = d_bag(2, 2)
-    hobgob = Character("Hobgoblin", 65, hob_dice)
+    hob_dice = d_bag(2, 1)
+    hobgob = Character("Hobgoblin", 60, hob_dice)
 
     orc_dice = d_bag(3, 1)
-    orc = Character("Orc", 80, orc_dice)
+    orc = Character("Orc", 75, orc_dice)
 
-    troll_dice = d_bag(3, 2)
-    troll = Character("Cave Troll", 95, troll_dice)
+    troll_dice = d_bag(3, 1)
+    troll = Character("Cave Troll", 90, troll_dice)
 
     owl_dice = d_bag(4, 1)
-    owlbear = Character("Owlbear", 110, owl_dice)
+    owlbear = Character("Owlbear", 105, owl_dice)
 
-    chim_dice = d_bag(4, 2)
-    chimera = Character("Chimera", 125, chim_dice)
+    chim_dice = d_bag(4, 1)
+    chimera = Character("Chimera", 120, chim_dice)
 
-    giant_dice = d_bag(5, 2)
-    giant = Character("Giant", 140, giant_dice)
+    giant_dice = d_bag(5, 1)
+    giant = Character("Giant", 135, giant_dice)
 
-    drag_dice = d_bag(6, 2)
-    dragon = Character("Dragon", 155, drag_dice)
+    drag_dice = d_bag(6, 1)
+    dragon = Character("Dragon", 150, drag_dice)
 
     enemy_list = [dragon, giant, chimera, owlbear,
                   troll, orc, hobgob, goblin, bat, slime]
@@ -208,8 +210,8 @@ def spend_points(player):
                 player.upgrade_dice(d_choice)
                 player.points -= 2
                 for i, d in enumerate(player.dice, start=1):
-                    print("{} : {}".format(i, d))
                     print("Die upgraded")
+                    print("{} : {}".format(i, d))
                     pause()
                 spend_points(player)
 
@@ -245,6 +247,8 @@ def spend_points(player):
 
 def shia_surprise():
     os.system('clear')
+    print("You have defeated all the enemies!")
+    pause()
     print("You start to celebrate the hard fought victory... ")
     pause()
     print("You look over your shoulder and see him...")
@@ -286,3 +290,39 @@ def pause():
 
 def fanfare():
     print("Winner")
+
+
+def save_game(player, enemy, enemy_list):
+    path = '/home/jon/critical_hits/save_game.txt'
+    os.system('clear')
+    print("1: Yes")
+    print("2: No")
+    choice = input("Would you like to save the game?: ")
+    if choice == "1":
+        print("do stuff")
+        data = player, enemy, enemy_list
+        # how do I save json to save_game.txt
+        json.dumps(data)
+        sys.exit()
+    elif choice == "2":
+        sys.exit()
+    else:
+        save_game()
+
+
+# def load_game():
+    # load game state from JSON file
+
+
+def initialize():
+    os.system('clear')
+    print("Welcome to Critical Hits!")
+    print("1: New Game")
+    print("2: Load Game")
+    choice = input(": ")
+    if choice == "1":
+        player = set_player()
+        enemy_list = set_enemies()
+        return player, enemy_list
+    elif choice == "2":
+        load_game()

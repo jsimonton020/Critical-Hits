@@ -1,17 +1,11 @@
 #!/usr/bin/python3
-from classes import (set_enemies, set_player, character_roll, down,
+from classes import (initialize, save_game, character_roll, down,
                      died, draw)
 import os
-import sys
 
-player = set_player()
-enemy_list = set_enemies()
+player, enemy_list = initialize()
 enemy = enemy_list.pop()
 
-
-os.system('clear')
-print("\nWelcome to Critical Hits!\n")
-print("You have", player.points, "points.")
 
 while True:
     print(enemy.name, "hit points:", enemy.hp)
@@ -25,16 +19,15 @@ while True:
         character_roll(player, enemy)
         if enemy.hp <= 0 and player.hp > 0:
             enemy = down(player, enemy, enemy_list)
-        if player.hp <= 0 and enemy.hp > 0:
+        elif player.hp <= 0 and enemy.hp > 0:
             enemy_list = died(player, enemy, enemy_list)
             enemy = enemy_list.pop()
-        if player.hp <= 0 and enemy.hp <= 0:
+        elif player.hp <= 0 and enemy.hp <= 0:
             enemy_list = draw(player, enemy, enemy_list)
             enemy = enemy_list.pop()
 
     elif choice == "2":
-        print("Closing Critical Hits")
-        sys.exit()
+        save_game(player, enemy, enemy_list)
 
     else:
         os.system('clear')
